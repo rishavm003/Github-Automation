@@ -1,5 +1,9 @@
 import os
 import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
+import datetime
 from bot.log_manager import write_daily_log
 from bot.readme_updater import update_readme_stats
 from bot.issue_engager import engage_good_first_issue

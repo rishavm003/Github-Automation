@@ -1,21 +1,22 @@
 import os
 from github import Github
-from anthropic import Anthropic
+from bot.ai_helper import get_ai_response
 
 def handle_own_issues():
     github_token = os.getenv("GITHUB_TOKEN")
-    anthropic_key = os.getenv("ANTHROPIC_API_KEY")
-    
-    if not github_token or not anthropic_key:
-        print("Missing API keys. Skipping own issue handler.")
+    if not github_token:
+        print("Missing GITHUB_TOKEN. Skipping own issue handler.")
         return []
 
-    g = Github(github_token)
-    client = Anthropic(api_key=anthropic_key)
-    user = g.get_user()
+    try:
+        g = Github(github_token)
+        user = g.get_user()
+    except Exception as e:
+        print(f"GitHub Error: {e}")
+        return []
     
     responses = []
-    
+
     # Get recent issues in owned repos
     for repo in user.get_repos(type="owner"):
         issues = repo.get_issues(state="open")
@@ -24,22 +25,11 @@ def handle_own_issues():
             if issue.comments == 0:
                 print(f"Drafting response for issue {issue.title} in {repo.name}")
                 
-                # Use Claude to draft a friendly reply
                 prompt = f"Write a short, friendly open-source maintainer reply acknowledging this new issue:\nTitle: {issue.title}\nBody: {issue.body}\nDo not include any placeholders, just the comment text."
                 
                 try:
-                    response = client.messages.create(
-                        model="claude-3-haiku-20240307",
-                        max_tokens=200,
-                        messages=[{"role": "user", "content": prompt}]
-                    )
-                    draft_reply = response.content[0].text
-                    
-                    # Instead of auto-posting (which might be risky depending on what Claude says),
-                    # we can post it with a draft prefix for review or auto-post if specified.
-                    # Posting it right away according to prompt "Uses Claude API to draft and post friendly replies."
-                    
-                    issue.create_comment(f"*(Auto-drafted by Claude)*\n{draft_reply}")
+                    draft_reply = get_ai_response(prompt)
+                    issue.create_comment(f"*(Auto-drafted by AI)*\n{draft_reply}")
                     
                     responses.append({
                         "repo": repo.name,
@@ -48,6 +38,6 @@ def handle_own_issues():
                         "draft": draft_reply
                     })
                 except Exception as e:
-                    print(f"Error calling Claude: {e}")
+                    print(f"Error drafting reply: {e}")
                     
     return responses
