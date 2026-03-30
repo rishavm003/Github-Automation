@@ -3,9 +3,9 @@ from github import Github
 from bot.ai_helper import get_ai_response
 
 def handle_own_issues():
-    github_token = os.getenv("GITHUB_TOKEN")
+    github_token = os.getenv("GIT_TOKEN")
     if not github_token:
-        print("Missing GITHUB_TOKEN. Skipping own issue handler.")
+        print("Missing GIT_TOKEN. Skipping own issue handler.")
         return []
 
     try:

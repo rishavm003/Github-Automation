@@ -3,9 +3,9 @@ from github import Github
 from bot.ai_helper import get_ai_response
 
 def engage_good_first_issue():
-    token = os.getenv("GITHUB_TOKEN")
+    token = os.getenv("GIT_TOKEN")
     if not token:
-        print("GITHUB_TOKEN not set. Skipping good first issues.")
+        print("GIT_TOKEN not set. Skipping good first issues.")
         return None
 
     try:

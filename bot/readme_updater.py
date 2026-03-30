@@ -3,9 +3,9 @@ import re
 from github import Github
 
 def update_readme_stats():
-    token = os.getenv("GITHUB_TOKEN")
+    token = os.getenv("GIT_TOKEN")
     if not token:
-        print("GITHUB_TOKEN not set. Skipping README update.")
+        print("GIT_TOKEN not set. Skipping README update.")
         return {"error": "No token"}
 
     g = Github(token)

@@ -16,4 +16,4 @@ This repository houses the Python scripts and GitHub Action workflow for the Dai
 
 ## Setup
 1. Define repository secrets: `GEMINI_API_KEY`
-2. Ensure `GITHUB_TOKEN` has read/write permissions for repo contents and issues.
+2. Ensure `GIT_TOKEN` has read/write permissions for repo contents and issues.
