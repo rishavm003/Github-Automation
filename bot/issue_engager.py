@@ -31,15 +31,17 @@ def engage_good_first_issue():
                 # Use AI to generate the comment body
                 comment_body = get_ai_response(prompt)
                 
-                target_issue.create_comment(f"*(Auto-drafted by AI)*\n{comment_body}")
-                print(f"Commented on {target_issue.html_url}")
+                # We NO LONGER post automatically.
+                # Instead, we just return the draft.
+                print(f"Drafted review for good-first-issue: {target_issue.title}")
                 return {
+                    "type": "good_first_issue",
                     "url": target_issue.html_url,
                     "title": target_issue.title,
-                    "comment": comment_body
+                    "draft": comment_body
                 }
             except Exception as e:
-                print(f"Failed to generate or post comment: {e}")
+                print(f"Failed to generate draft: {e}")
         else:
             print("Already commented on the newest good-first-issue.")
     

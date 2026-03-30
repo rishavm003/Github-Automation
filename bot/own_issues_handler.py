@@ -34,9 +34,11 @@ def handle_own_issues():
                 
                 try:
                     draft_reply = get_ai_response(prompt)
-                    issue.create_comment(f"*(Auto-drafted by AI)*\n{draft_reply}")
+                    # We NO LONGER post automatically.
+                    print(f"Drafted review for own issue: {issue.title}")
                     
                     responses.append({
+                        "type": "own_issue",
                         "repo": repo.name,
                         "issue_title": issue.title,
                         "url": issue.html_url,

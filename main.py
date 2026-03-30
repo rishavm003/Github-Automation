@@ -9,6 +9,7 @@ from bot.readme_updater import update_readme_stats
 from bot.issue_engager import engage_good_first_issue
 from bot.own_issues_handler import handle_own_issues
 from bot.report_generator import generate_reports
+from bot.draft_manager import save_draft
 
 def main():
     print("Starting GitHub Daily Automation Bot")
@@ -30,14 +31,21 @@ def main():
     # 3. Good First Issues
     gfi_action = engage_good_first_issue()
     day_artifacts["good_first_issue"] = gfi_action
+    if gfi_action:
+        save_draft(gfi_action["type"], "Unknown (Search)", gfi_action["url"], gfi_action["title"], gfi_action["draft"])
 
-    # 4. Claude Replies to Own Issues
+    # 4. AI Replies to Own Issues
     claude_responses = handle_own_issues()
     day_artifacts["claude_responses"] = claude_responses
+    for resp in claude_responses:
+        save_draft(resp["type"], resp["repo"], resp["url"], resp["issue_title"], resp["draft"])
 
     # 5. Generate Reports
     md_report, docx_report = generate_reports(date_str, timestamp, day_artifacts)
     print(f"Generated reports: {md_report}, {docx_report}")
+    
+    if gfi_action or claude_responses:
+        print("\n[!] DRAFTS GENERATED: Run 'python approve_drafts.py' to review and post comments.")
 
 if __name__ == "__main__":
     main()
