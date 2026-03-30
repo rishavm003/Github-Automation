@@ -16,7 +16,7 @@ def engage_good_first_issue():
         return None
     
     # Search query
-    query = "label:\"good first issue\" state:open language:python language:javascript"
+    query = "label:\"good first issue\" state:open language:python language:javascript is:issue"
     issues = g.search_issues(query, sort="created", order="desc")
     
     if issues.totalCount > 0:
