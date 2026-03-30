@@ -20,7 +20,12 @@ def handle_own_issues():
     # Get recent issues in owned repos
     for repo in user.get_repos(type="owner"):
         issues = repo.get_issues(state="open")
-        for issue in issues[:5]: # limit to 5 to avoid heavy API usage
+        # Use a count to limit to 5 instead of slicing to avoid PaginatedList IndexError
+        count = 0
+        for issue in issues:
+            if count >= 5:
+                break
+            count += 1
             # If no comments except the creator's, or just new issue
             if issue.comments == 0:
                 print(f"Drafting response for issue {issue.title} in {repo.name}")
