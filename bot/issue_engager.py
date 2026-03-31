@@ -38,7 +38,16 @@ def engage_good_first_issue():
         already_commented = any(c.user.login == user.login for c in comments)
         
         if not already_commented:
-            prompt = f"Write a short, encouraging comment for a beginner taking on their first open source issue. The issue is titled: '{target_issue.title}'. Keep it very brief and friendly, and don't include any placeholders."
+            import random
+            styles = ["supportive", "enthusiastic", "technical but friendly", "welcoming", "concise"]
+            selected_style = random.choice(styles)
+            
+            prompt = (
+                f"Write a {selected_style} and UNIQUE comment for a beginner taking on their first open source issue. "
+                f"The issue is titled: '{target_issue.title}'. "
+                "Avoid generic templates. Try to be varied in your phrasing. "
+                "Keep it very brief and friendly, and don't include any placeholders."
+            )
             try:
                 # Use AI to generate the comment body
                 comment_body = get_ai_response(prompt)
