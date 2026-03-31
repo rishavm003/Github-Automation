@@ -6,9 +6,9 @@ from bot.draft_manager import load_all_drafts, clear_drafts
 
 def main():
     load_dotenv()
-    token = os.getenv("GIT_TOKEN")
+    token = os.getenv("GITHUB_TOKEN") or os.getenv("GIT_TOKEN")
     if not token:
-        print("GIT_TOKEN not set in .env")
+        print("GITHUB_TOKEN or GIT_TOKEN not set in .env")
         return
 
     drafts = load_all_drafts()

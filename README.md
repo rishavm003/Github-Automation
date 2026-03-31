@@ -11,7 +11,9 @@ This repository houses the Python scripts and GitHub Action workflow for the Dai
 
 ## Stats
 <!-- STATS:START -->
-*Stats will be populated automatically by GitHub Actions.*
+**Total Repositories:** 24
+**Total Stars:** 0
+
 <!-- STATS:END -->
 
 ## Setup

@@ -10,8 +10,9 @@ def get_ai_response(prompt):
     gemini_key = os.getenv("GEMINI_API_KEY")
     deepseek_key = os.getenv("DEEPSEEK_API_KEY")
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    anthropic_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
 
-    if not any([gemini_key, deepseek_key, openrouter_key]):
+    if not any([gemini_key, deepseek_key, openrouter_key, anthropic_key]):
         raise Exception("Missing AI API keys.")
 
     # 1. Try Gemini
@@ -58,6 +59,25 @@ def get_ai_response(prompt):
             resp.raise_for_status()
             return resp.json()["choices"][0]["message"]["content"]
         except Exception as e:
-            print(f"OpenRouter failed: {e}.")
+            print(f"OpenRouter failed: {e}. Falling back...")
+
+    # 4. Try Anthropic (Claude)
+    if anthropic_key:
+        try:
+            headers = {
+                "x-api-key": anthropic_key,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json"
+            }
+            data = {
+                "model": "claude-3-haiku-20240307",
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 512
+            }
+            resp = requests.post("https://api.anthropic.com/v1/messages", headers=headers, json=data, timeout=10)
+            resp.raise_for_status()
+            return resp.json()["content"][0]["text"]
+        except Exception as e:
+            print(f"Anthropic failed: {e}.")
     
     raise Exception("All configured AI providers failed")

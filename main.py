@@ -6,8 +6,7 @@ load_dotenv()
 import datetime
 from bot.log_manager import write_daily_log
 from bot.readme_updater import update_readme_stats
-from bot.issue_engager import engage_good_first_issue
-from bot.own_issues_handler import handle_own_issues
+from bot.issue_engager import engage_good_first_issue, handle_own_repo_issues
 from bot.report_generator import generate_reports
 from bot.draft_manager import save_draft
 
@@ -35,7 +34,7 @@ def main():
         save_draft(gfi_action["type"], "Unknown (Search)", gfi_action["url"], gfi_action["title"], gfi_action["draft"])
 
     # 4. AI Replies to Own Issues
-    claude_responses = handle_own_issues()
+    claude_responses = handle_own_repo_issues()
     day_artifacts["claude_responses"] = claude_responses
     for resp in claude_responses:
         save_draft(resp["type"], resp["repo"], resp["url"], resp["issue_title"], resp["draft"])
