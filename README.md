@@ -395,6 +395,6 @@ Approved drafts add more contribution activity throughout the day.
 
 <br/><br/>
 
-*Replace `rishavm003` with your GitHub username before pushing.*
+*Replace `YOUR_USERNAM` with your GitHub username before pushing.*
 
 </div>
