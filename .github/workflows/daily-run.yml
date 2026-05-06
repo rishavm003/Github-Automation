@@ -41,7 +41,7 @@ jobs:
         run: |
           git config --global user.name 'rishavm003'
           git config --global user.email 'rishavmishra2003@gmail.com'
-          git add logs/ reports/ README.md drafts/
+          git add data/logs/ data/reports/ README.md data/drafts/
           # Check if there are changes to commit
           if ! git diff-index --quiet HEAD; then
             git commit -m "Auto-generated daily execution reports and logs [skip ci]"

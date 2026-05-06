@@ -1,10 +1,10 @@
 import os
 import json
 
-DRAFTS_FILE = "drafts/pending.json"
+DRAFTS_FILE = "data/drafts/pending.json"
 
 def save_draft(type, repo, issue_url, title, draft):
-    os.makedirs("drafts", exist_ok=True)
+    os.makedirs("data/drafts", exist_ok=True)
     
     drafts = []
     if os.path.exists(DRAFTS_FILE):

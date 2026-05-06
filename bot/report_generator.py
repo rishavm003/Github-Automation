@@ -2,9 +2,9 @@ import os
 from docx import Document
 
 def generate_reports(date_str, timestamp, artifacts):
-    os.makedirs("reports", exist_ok=True)
-    md_file = f"reports/Report_{date_str}.md"
-    docx_file = f"reports/Report_{date_str}.docx"
+    os.makedirs("data/reports", exist_ok=True)
+    md_file = f"data/reports/Report_{date_str}.md"
+    docx_file = f"data/reports/Report_{date_str}.docx"
     
     # 1. Generate Markdown Report
     with open(md_file, "w", encoding="utf-8") as f:
@@ -37,7 +37,7 @@ def generate_reports(date_str, timestamp, artifacts):
                 f.write(f"- **{reply['repo']} / {reply['issue_title']}**\n  > {reply['draft']}\n\n")
                 
         f.write("## Full Artifacts List\n")
-        f.write(f"- `logs/{date_str}.log`\n")
+        f.write(f"- `data/logs/{date_str}.log`\n")
         f.write(f"- `{md_file}`\n")
         f.write(f"- `{docx_file}`\n")
         

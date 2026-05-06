@@ -24,8 +24,8 @@ def write_daily_log(date_str, timestamp):
     quote_data = get_daily_quote()
     quote_text = f"\"{quote_data['q']}\" - {quote_data['a']}"
     
-    os.makedirs("logs", exist_ok=True)
-    log_file = f"logs/{date_str}.log"
+    os.makedirs("data/logs", exist_ok=True)
+    log_file = f"data/logs/{date_str}.log"
     with open(log_file, "w", encoding="utf-8") as f:
         f.write(f"Timestamp: {timestamp}\n")
         f.write(f"Quote: {quote_text}\n")

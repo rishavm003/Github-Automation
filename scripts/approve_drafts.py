@@ -62,7 +62,7 @@ def main():
     if not remaining_drafts:
         clear_drafts()
     else:
-        with open("drafts/pending.json", "w", encoding="utf-8") as f:
+        with open("data/drafts/pending.json", "w", encoding="utf-8") as f:
             json.dump(remaining_drafts, f, indent=4)
 
     print(f"Review session finished. {approved_count} comments posted.")
