@@ -1,13 +1,12 @@
-import os
 import json
 from github import Github
 from bot.ai_helper import get_ai_response
+from bot.config import REPO_TONES_FILE
 
 def get_tone(repo_name):
     try:
-        config_path = os.path.join("config", "repo_tones.json")
-        if os.path.exists(config_path):
-            with open(config_path, "r", encoding="utf-8") as f:
+        if os.path.exists(REPO_TONES_FILE):
+            with open(REPO_TONES_FILE, "r", encoding="utf-8") as f:
                 tones = json.load(f)
                 return tones.get(repo_name, tones.get("default", "professional and helpful"))
     except:

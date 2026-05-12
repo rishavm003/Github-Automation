@@ -1,6 +1,7 @@
 import os
 import requests
 import random
+from bot.config import LOGS_DIR, ensure_dirs
 
 def get_daily_quote():
     # Try fetching a quote from an open API or use fallback
@@ -24,8 +25,8 @@ def write_daily_log(date_str, timestamp):
     quote_data = get_daily_quote()
     quote_text = f"\"{quote_data['q']}\" - {quote_data['a']}"
     
-    os.makedirs("data/logs", exist_ok=True)
-    log_file = f"data/logs/{date_str}.log"
+    ensure_dirs()
+    log_file = os.path.join(LOGS_DIR, f"{date_str}.log")
     with open(log_file, "w", encoding="utf-8") as f:
         f.write(f"Timestamp: {timestamp}\n")
         f.write(f"Quote: {quote_text}\n")

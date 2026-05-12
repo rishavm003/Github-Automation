@@ -62,7 +62,8 @@ def main():
     if not remaining_drafts:
         clear_drafts()
     else:
-        with open("data/drafts/pending.json", "w", encoding="utf-8") as f:
+        from bot.config import DRAFTS_FILE
+        with open(DRAFTS_FILE, "w", encoding="utf-8") as f:
             json.dump(remaining_drafts, f, indent=4)
 
     print(f"Review session finished. {approved_count} comments posted.")

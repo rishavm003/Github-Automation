@@ -1,10 +1,8 @@
-import os
 import json
-
-DRAFTS_FILE = "data/drafts/pending.json"
+from bot.config import DRAFTS_FILE, ensure_dirs
 
 def save_draft(type, repo, issue_url, title, draft):
-    os.makedirs("data/drafts", exist_ok=True)
+    ensure_dirs()
     
     drafts = []
     if os.path.exists(DRAFTS_FILE):

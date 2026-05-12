@@ -1,10 +1,11 @@
 import os
 from docx import Document
+from bot.config import REPORTS_DIR, REVIEW_FILE, ensure_dirs
 
 def generate_reports(date_str, timestamp, artifacts):
-    os.makedirs("data/reports", exist_ok=True)
-    md_file = f"data/reports/Report_{date_str}.md"
-    docx_file = f"data/reports/Report_{date_str}.docx"
+    ensure_dirs()
+    md_file = os.path.join(REPORTS_DIR, f"Report_{date_str}.md")
+    docx_file = os.path.join(REPORTS_DIR, f"Report_{date_str}.docx")
     
     # 1. Generate Markdown Report
     with open(md_file, "w", encoding="utf-8") as f:
@@ -67,11 +68,11 @@ def generate_reports(date_str, timestamp, artifacts):
 
 def generate_review_md(drafts):
     if not drafts:
-        if os.path.exists("REVIEW.md"):
-            os.remove("REVIEW.md")
+        if os.path.exists(REVIEW_FILE):
+            os.remove(REVIEW_FILE)
         return
 
-    with open("REVIEW.md", "w", encoding="utf-8") as f:
+    with open(REVIEW_FILE, "w", encoding="utf-8") as f:
         f.write("# 👁 Pending AI Drafts for Review\n\n")
         f.write(f"Generated at: {os.popen('date /t').read().strip()} {os.popen('time /t').read().strip()}\n\n")
         f.write("> **How to use:** Review the drafts below. Run `python approve_drafts.py` to post, edit, or reject them.\n\n")
