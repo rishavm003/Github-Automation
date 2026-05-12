@@ -16,12 +16,6 @@ def generate_reports(date_str, timestamp, artifacts):
         f.write("## Task Summary Table\n")
         f.write("| Task | Status | Details |\n|---|---|---|\n")
         f.write(f"| Log Commit | Success | Wrote {artifacts.get('log_file', 'No file')} |\n")
-        
-        readme = artifacts.get('readme_stats')
-        if readme and 'error' not in readme:
-            f.write(f"| Profile README | Success | {readme.get('total_repos', 0)} Repos, {readme.get('total_stars', 0)} Stars |\n")
-        else:
-            f.write("| Profile README | Skipped | Token missing or local README not found |\n")
             
         gfi = artifacts.get('good_first_issue')
         if gfi:

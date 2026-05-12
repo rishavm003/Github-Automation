@@ -44,7 +44,6 @@
   🤖 Bot wakes up
        │
        ├─► 📝  Commits daily log + motivational quote
-       ├─► 📊  Updates README with live GitHub stats
        ├─► 🔍  Scans & scores good-first-issues across your target languages
        └─► 💬  Drafts AI replies to new issues in your own repos
 
@@ -102,12 +101,6 @@ Scans your own repos for unanswered issues. Uses AI to draft a warm, context-awa
 </tr>
 </table>
 
-## 📊 Live Stats
-<!-- STATS:START -->
-**Total Repositories:** 33
-**Total Stars:** 0
-
-<!-- STATS:END -->
 
 ---
 
@@ -203,7 +196,7 @@ Go to your repo → **Settings → Secrets and variables → Actions → New rep
 
 > *If configured, you will receive an immediate email notification if the morning run encounters an error or fails.
 >
-> **`GIT_TOKEN` is required for advanced features like live profile stats and scanning your other repositories for issues. The default `GITHUB_TOKEN` is used for basic operation and pushing logs.
+> **`GIT_TOKEN` is required for scanning your other repositories for issues. The default `GITHUB_TOKEN` is used for basic operation and pushing logs.
 
 > `GITHUB_TOKEN` is provided automatically — no action needed.
 
@@ -248,7 +241,6 @@ github-automator/
 │   ├── draft_manager.py       ← 🗂  Save, expire, deduplicate drafts
 │   ├── issue_engager.py       ← 🔍 PR scanner + issue responder
 │   ├── log_manager.py         ← 📝 Daily log with quote
-│   ├── readme_updater.py      ← 📊 Live GitHub stats
 │   └── report_generator.py   ← 📋 REVIEW.md + daily reports
 │
 ├── 📁 config/
@@ -384,7 +376,6 @@ python approve_drafts.py --dry-run    # Preview without posting
 <br/>
 
 <img src="https://img.shields.io/badge/Daily_Commits-✓_Log_file-2ea44f?style=for-the-badge" alt="daily"/>
-<img src="https://img.shields.io/badge/README_Updates-✓_Live_stats-2ea44f?style=for-the-badge" alt="readme"/>
 <img src="https://img.shields.io/badge/Issue_Comments-✓_On_approval-2ea44f?style=for-the-badge" alt="comments"/>
 
 <br/><br/>

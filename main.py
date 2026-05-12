@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 from bot.log_manager import write_daily_log
-from bot.readme_updater import update_readme_stats
 from bot.issue_engager import engage_good_first_issue, handle_own_repo_issues
 from bot.report_generator import generate_reports, generate_review_md
 from bot.draft_manager import save_draft, load_all_drafts
@@ -22,11 +21,7 @@ def main():
     day_artifacts["quote"] = quote_data
     day_artifacts["log_file"] = log_file
 
-    # 2. Update Profile README
-    stats = update_readme_stats()
-    day_artifacts["readme_stats"] = stats
-
-    # 3. Good First Issues
+    # 2. Good First Issues
     gfi_action = engage_good_first_issue()
     day_artifacts["good_first_issue"] = gfi_action
     if gfi_action:
