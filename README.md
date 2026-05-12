@@ -38,7 +38,7 @@
 </div>
 
 ```
-  Every day at 6:00 AM UTC — automatically, zero input from you
+  Every day at 6:00 AM IST — automatically, zero input from you
   ─────────────────────────────────────────────────────────────
 
   🤖 Bot wakes up
@@ -101,6 +101,13 @@ Scans your own repos for unanswered issues. Uses AI to draft a warm, context-awa
 </td>
 </tr>
 </table>
+
+## 📊 Live Stats
+<!-- STATS:START -->
+**Total Repositories:** 33
+**Total Stars:** 0
+
+<!-- STATS:END -->
 
 ---
 
@@ -189,6 +196,11 @@ Go to your repo → **Settings → Secrets and variables → Actions → New rep
 | `DEEPSEEK_API_KEY` | is required | [platform.deepseek.com](https://platform.deepseek.com) |
 | `OPENROUTER_API_KEY` | at minimum | [openrouter.ai](https://openrouter.ai) |
 | `ANTHROPIC_API_KEY` | optional | [console.anthropic.com](https://console.anthropic.com) |
+| `MAIL_USERNAME` | optional* | Your Gmail address (for failure notifications) |
+| `MAIL_PASSWORD` | optional* | Gmail App Password (not your main password) |
+| `MAIL_TO` | optional* | The email address to receive notifications |
+
+> *If configured, you will receive an immediate email notification if the morning run encounters an error or fails.
 
 > `GITHUB_TOKEN` is provided automatically — no action needed.
 
@@ -212,7 +224,7 @@ export GITHUB_TOKEN=ghp_your_token_here
 
 ### Step 5 — That's it. It runs itself.
 
-The workflow triggers automatically at **6:00 AM UTC** every day. You can also check it fired correctly under the **Actions** tab.
+The workflow triggers automatically at **6:00 AM IST** every day. You can also check it fired correctly under the **Actions** tab.
 
 ---
 
@@ -226,7 +238,7 @@ The workflow triggers automatically at **6:00 AM UTC** every day. You can also c
 github-automator/
 │
 ├── 📁 .github/workflows/
-│   └── daily-run.yml          ← ⏰ Cron: runs at 6 AM UTC daily
+│   └── daily-run.yml          ← ⏰ Cron: runs at 6 AM IST daily
 │
 ├── 📁 bot/
 │   ├── ai_helper.py           ← 🧠 Gemini → DeepSeek → OpenRouter → Claude
@@ -342,7 +354,7 @@ The AI also reads issue **labels** automatically:
 </div>
 
 ```
-🌅  Morning — bot already ran at 6 AM while you were asleep
+🌅  Morning — bot already ran at 6 AM IST while you were asleep
 
   $ git pull
   $ cat REVIEW.md              # see what it prepared

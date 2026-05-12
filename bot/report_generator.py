@@ -64,3 +64,32 @@ def generate_reports(date_str, timestamp, artifacts):
     doc.save(docx_file)
     
     return md_file, docx_file
+
+def generate_review_md(drafts):
+    if not drafts:
+        if os.path.exists("REVIEW.md"):
+            os.remove("REVIEW.md")
+        return
+
+    with open("REVIEW.md", "w", encoding="utf-8") as f:
+        f.write("# 👁 Pending AI Drafts for Review\n\n")
+        f.write(f"Generated at: {os.popen('date /t').read().strip()} {os.popen('time /t').read().strip()}\n\n")
+        f.write("> **How to use:** Review the drafts below. Run `python approve_drafts.py` to post, edit, or reject them.\n\n")
+        
+        f.write("## Summary\n")
+        f.write(f"- Total Pending: **{len(drafts)}**\n\n")
+        
+        f.write("| # | Repo | Issue Title | Type |\n")
+        f.write("|---|------|-------------|------|\n")
+        for i, d in enumerate(drafts, 1):
+            f.write(f"| {i} | {d['repo']} | [{d['title']}]({d['url']}) | `{d['type']}` |\n")
+        
+        f.write("\n---\n\n")
+        
+        for i, d in enumerate(drafts, 1):
+            f.write(f"### Draft {i}: {d['repo']}\n")
+            f.write(f"**Issue:** [{d['title']}]({d['url']})\n\n")
+            f.write("```text\n")
+            f.write(d['draft'])
+            f.write("\n```\n\n")
+            f.write("---\n\n")

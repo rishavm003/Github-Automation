@@ -2,7 +2,7 @@ name: Daily Automation Bot
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Runs at 6 AM UTC every day
+    - cron: '30 0 * * *'  # Runs at 6 AM IST (00:30 UTC) every day
   workflow_dispatch:      # Allows manual triggering
 
 jobs:
@@ -30,7 +30,8 @@ jobs:
 
       - name: Run automation script
         env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -49,3 +50,25 @@ jobs:
           else
             echo "No changes to commit"
           fi
+
+      - name: Send Notification Mail on Failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: ⚠️ GitHub Automator: Daily Run Failed
+          to: ${{ secrets.MAIL_TO }}
+          from: GitHub Automator Notifications
+          body: |
+            Hello,
+            
+            This is an automated notification. Your GitHub Daily Automation Bot experienced an error during its morning run.
+            
+            Please check your GitHub Actions logs to investigate the issue:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            - The GitHub Automator Bot
