@@ -196,11 +196,14 @@ Go to your repo → **Settings → Secrets and variables → Actions → New rep
 | `DEEPSEEK_API_KEY` | is required | [platform.deepseek.com](https://platform.deepseek.com) |
 | `OPENROUTER_API_KEY` | at minimum | [openrouter.ai](https://openrouter.ai) |
 | `ANTHROPIC_API_KEY` | optional | [console.anthropic.com](https://console.anthropic.com) |
+| `GIT_TOKEN` | optional** | [Personal Access Token (PAT)](https://github.com/settings/tokens) |
 | `MAIL_USERNAME` | optional* | Your Gmail address (for failure notifications) |
 | `MAIL_PASSWORD` | optional* | Gmail App Password (not your main password) |
 | `MAIL_TO` | optional* | The email address to receive notifications |
 
 > *If configured, you will receive an immediate email notification if the morning run encounters an error or fails.
+>
+> **`GIT_TOKEN` is required for advanced features like live profile stats and scanning your other repositories for issues. The default `GITHUB_TOKEN` is used for basic operation and pushing logs.
 
 > `GITHUB_TOKEN` is provided automatically — no action needed.
 
