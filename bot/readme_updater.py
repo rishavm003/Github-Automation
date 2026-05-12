@@ -8,13 +8,15 @@ def update_readme_stats():
         print("GITHUB_TOKEN or GIT_TOKEN not set. Skipping README update.")
         return {"error": "No token"}
 
-    g = Github(token)
-    user = g.get_user()
-    
-    # Calculate simple stats
-    repos = user.get_repos()
-    total_stars = sum(repo.stargazers_count for repo in repos)
-    total_repos = repos.totalCount
+    try:
+        user = g.get_user()
+        # Calculate simple stats
+        repos = user.get_repos()
+        total_stars = sum(repo.stargazers_count for repo in repos)
+        total_repos = repos.totalCount
+    except Exception as e:
+        print(f"Error fetching GitHub stats: {e}")
+        return {"error": str(e)}
 
     stats_md = f"**Total Repositories:** {total_repos}\n**Total Stars:** {total_stars}\n"
     

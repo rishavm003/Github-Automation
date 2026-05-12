@@ -83,33 +83,36 @@ def handle_own_repo_issues():
     
     responses = []
 
-    # Get recent issues in owned repos
-    for repo in user.get_repos(type="owner"):
-        issues = repo.get_issues(state="open")
-        count = 0
-        for issue in issues:
-            if count >= 3: # Limit to 3 for performance
-                break
-            count += 1
-            
-            if issue.comments == 0:
-                print(f"Drafting response for issue {issue.title} in {repo.name}")
+    try:
+        # Get recent issues in owned repos
+        for repo in user.get_repos(type="owner"):
+            issues = repo.get_issues(state="open")
+            count = 0
+            for issue in issues:
+                if count >= 3: # Limit to 3 for performance
+                    break
+                count += 1
                 
-                tone = get_tone(repo.name)
-                prompt = f"Write a short, {tone} open-source maintainer reply acknowledging this new issue:\nTitle: {issue.title}\nBody: {issue.body}\nDo not include any placeholders, just the comment text."
-                
-                try:
-                    draft_reply = get_ai_response(prompt)
-                    print(f"Drafted review for own issue: {issue.title}")
+                if issue.comments == 0:
+                    print(f"Drafting response for issue {issue.title} in {repo.name}")
                     
-                    responses.append({
-                        "type": "own_issue",
-                        "repo": repo.name,
-                        "issue_title": issue.title,
-                        "url": issue.html_url,
-                        "draft": draft_reply
-                    })
-                except Exception as e:
-                    print(f"Error drafting reply: {e}")
+                    tone = get_tone(repo.name)
+                    prompt = f"Write a short, {tone} open-source maintainer reply acknowledging this new issue:\nTitle: {issue.title}\nBody: {issue.body}\nDo not include any placeholders, just the comment text."
                     
+                    try:
+                        draft_reply = get_ai_response(prompt)
+                        print(f"Drafted review for own issue: {issue.title}")
+                        
+                        responses.append({
+                            "type": "own_issue",
+                            "repo": repo.name,
+                            "issue_title": issue.title,
+                            "url": issue.html_url,
+                            "draft": draft_reply
+                        })
+                    except Exception as e:
+                        print(f"Error drafting reply: {e}")
+    except Exception as e:
+        print(f"Error listing owned repositories: {e}")
+                        
     return responses
