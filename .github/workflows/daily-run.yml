@@ -1,6 +1,8 @@
 name: Daily Automation Bot
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     - cron: '30 0 * * *'  # Runs at 6 AM IST (00:30 UTC) every day
   workflow_dispatch:      # Allows manual triggering
@@ -60,7 +62,7 @@ jobs:
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: ⚠️ GitHub Automator: Daily Run Failed
+          subject: "GitHub Automator: Daily Run Failed"
           to: ${{ secrets.MAIL_TO }}
           from: GitHub Automator Notifications
           body: |
