@@ -31,11 +31,21 @@ def engage_good_first_issue():
     query = "label:\"good first issue\" state:open language:python language:javascript is:issue"
     issues = g.search_issues(query, sort="created", order="desc")
     
+    try:
+        my_login = user.login
+    except Exception:
+        my_login = None
+
     if issues.totalCount > 0:
         target_issue = issues[0]
         # Only comment if we haven't already
-        comments = target_issue.get_comments()
-        already_commented = any(c.user.login == user.login for c in comments)
+        already_commented = False
+        if my_login:
+            try:
+                comments = target_issue.get_comments()
+                already_commented = any(c.user.login == my_login for c in comments)
+            except:
+                pass
         
         if not already_commented:
             import random
