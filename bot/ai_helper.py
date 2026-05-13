@@ -1,12 +1,15 @@
 import os
 import requests
+import json
 
 def get_ai_response(prompt):
+    # ... (imports)
     try:
         import google.generativeai as genai
     except ImportError:
         genai = None
 
+    # ... (keys)
     gemini_key = os.getenv("GEMINI_API_KEY")
     deepseek_key = os.getenv("DEEPSEEK_API_KEY")
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
@@ -30,14 +33,19 @@ def get_ai_response(prompt):
         try:
             headers = {
                 "Authorization": f"Bearer {deepseek_key}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             }
-            data = {
+            payload = {
                 "model": "deepseek-chat",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.7
             }
-            resp = requests.post("https://api.deepseek.com/chat/completions", headers=headers, json=data, timeout=10)
+            resp = requests.post(
+                "https://api.deepseek.com/chat/completions", 
+                headers=headers, 
+                data=json.dumps(payload).encode("utf-8"), 
+                timeout=10
+            )
             resp.raise_for_status()
             return resp.json()["choices"][0]["message"]["content"]
         except Exception as e:
@@ -48,14 +56,19 @@ def get_ai_response(prompt):
         try:
             headers = {
                 "Authorization": f"Bearer {openrouter_key}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             }
-            data = {
+            payload = {
                 "model": "openrouter/auto",
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.7
             }
-            resp = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=10)
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions", 
+                headers=headers, 
+                data=json.dumps(payload).encode("utf-8"), 
+                timeout=10
+            )
             resp.raise_for_status()
             return resp.json()["choices"][0]["message"]["content"]
         except Exception as e:
@@ -67,14 +80,19 @@ def get_ai_response(prompt):
             headers = {
                 "x-api-key": anthropic_key,
                 "anthropic-version": "2023-06-01",
-                "content-type": "application/json"
+                "content-type": "application/json; charset=utf-8"
             }
-            data = {
+            payload = {
                 "model": "claude-3-haiku-20240307",
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": 512
             }
-            resp = requests.post("https://api.anthropic.com/v1/messages", headers=headers, json=data, timeout=10)
+            resp = requests.post(
+                "https://api.anthropic.com/v1/messages", 
+                headers=headers, 
+                data=json.dumps(payload).encode("utf-8"), 
+                timeout=10
+            )
             resp.raise_for_status()
             return resp.json()["content"][0]["text"]
         except Exception as e:
