@@ -1,3 +1,4 @@
+import os
 import json
 from github import Github
 from bot.ai_helper import get_ai_response
