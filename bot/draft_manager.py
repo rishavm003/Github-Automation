@@ -1,3 +1,4 @@
+import os
 import json
 from bot.config import DRAFTS_FILE, ensure_dirs
 
